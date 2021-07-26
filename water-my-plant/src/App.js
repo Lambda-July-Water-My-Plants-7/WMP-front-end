@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import {
   Switch,
@@ -14,19 +14,25 @@ import Register from './Components/Register';
 import { useState, useEffect } from 'react';
 import {reach} from 'yup';
 import loginschema from './validation/loginformSchema'
+import AddNewPlantForm from './Components/NewplantForm'
 
 const initialformvalues = {username: '', password: '',phoneNumber: ''}
 const initialErrors = {username: '', password: '',phoneNumber: ''}
 function App() {
   const [formvalues,setFormValues] = useState(initialformvalues)
   const [errors, setErrors] = useState(initialErrors)
+  const [logerror, setLogerror] = useState(initialErrors)
   const [disabled, setDisabled] = useState(true) 
   let location = useLocation();
 
   const validate = (name,value) => {
+    if(location.pathname === '/register') {
     reach(schema,name).validate(value).then(()=> setErrors({...errors,[name]:''}))
-    .catch(error => setErrors({...errors, [name]: error.errors[0]}))
-  }
+    .catch(error => setErrors({...errors, [name]: error.errors[0]})) }
+    else{
+      reach(schema,name).validate(value).then(()=> setLogerror({...logerror,[name]:''}))
+      .catch(error => setLogerror({...logerror, [name]: error.errors[0]})) }
+    }
   const change = (e)=> {
     const {value,name} = e.target
     setFormValues({...formvalues , [name] : value})
@@ -75,7 +81,8 @@ useEffect(() => {
 
       <Switch>
         <Route path="/login">
-        <Login errors = {errors} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Login>
+        {/* <Login errors = {logerror} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Login> */}
+        <AddNewPlantForm />
         </Route>
         <Route path="/register">
           <Register errors = {errors} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Register>
