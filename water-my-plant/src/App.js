@@ -81,7 +81,7 @@ useEffect(() => {
           <Register errors = {errors} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Register>
         </Route>
         <Redirect to="/login" />
-      </Switch>
+      </Switch>     
     </div>
   );
 }
