@@ -29,9 +29,6 @@ export default function Dashboard(props) {
         <table>
             <tr><th>Species</th><th>Nick name</th><th>H2o Interval</th><th>H2o Amount</th><th>Last Watered</th><th>Date/Time to be watered</th><th>Water</th></tr>
             {plants && plants.map(el => {
-                // var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
-                // d.setUTCSeconds(el.lastWatered);
-                // console.log(myDate.toGMTString()+" "+myDate.toLocaleString());
                 return  <tr><td>{el.speciesID}</td><td>{el.nickname}</td><td>{el.h2oInterval}</td><td>{el.h2oAmount}</td><td>{el.lastWatered}</td><td><button onClick={()=>water(el.plantID)}>Water</button></td></tr>
             })}
             
