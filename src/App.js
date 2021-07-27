@@ -43,7 +43,7 @@ function App() {
       console.log(res.data)
     }).catch( err => {console.log(err)})
   }
-    
+
   const submit = (e) => {
     e.preventDefault()
     if(location.pathname === '/register') {
@@ -82,6 +82,7 @@ useEffect(() => {
         </Route>
         <Redirect to="/login" />
       </Switch>
+
     </div>
   );
 }
