@@ -3,36 +3,43 @@
 
 }
 body{
-  background-color: #ffd90a40;
+  background-color: #eae5cd40;
 }
 .header{
   display: flex;
-width: 70%;
-margin: auto;
-align-items: center;
+  width: 70%;
+  margin: auto;
+  align-items: center;
+  background: #ab5396;
+  box-shadow: 10px 5px 5px #b18e8e;
+  border-radius: 18%;
+  padding: 1rem;
 }
 .header a {
-  flex: 1;
+  flex: 1 1;
   text-decoration: none;
-  color: green;
-font-weight: bold;
+  color: #6cc26c;
+  font-weight: bold;
+  font-size: 1.4rem;
 }
 .header a:hover{
-  color: #6cc26c;
+  color: #9dc738;
 }
 input{
   margin-bottom: 0.6rem;
-display: flex;
+  display: flex;
 }
 form{
   display: flex;
   flex-direction: column;
   border: solid white;
-  border-radius: 50%;
-  padding: 11rem;
+  border-radius: 20%;
+  padding: 3.5rem 11rem;
   background: white;
-  color: green;
+  color: #9dc738;
   font-weight: bold;
+  box-shadow: 10px 5px 5px #aeaeae;
+  border: solid 1px #c6bebe;
 }
 form p:empty{
 display: none;
@@ -45,11 +52,23 @@ color: #ff5a69;
 font-weight: bold;
 }
 .container {
+  width: 30%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+table{
+  margin: auto;
+  width: 50%;
+}
+th
+.tablecontainer{
   width: 50%;
   margin: auto;
   display: flex;
-flex-wrap: wrap;
-justify-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .header img {
   width: 6rem;
