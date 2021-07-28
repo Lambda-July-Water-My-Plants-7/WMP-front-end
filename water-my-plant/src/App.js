@@ -108,14 +108,14 @@ const logout = ()=> {
 
       <Switch>
         <Route path='/edit/:id'>
-      <EditPlant trigger = {trigger}/>
+      <EditPlant trigger ={trigger} setTrigger= {setTrigger}/>
         </Route>
      {localStorage.getItem('token') ? <div>
      <Route exact path="/add">
-        <AddNewPlantForm />
+        <AddNewPlantForm trigger ={trigger} setTrigger= {setTrigger} />
         </Route>
        <Route exact path="/dashboard">
-        <Dashboard trigger ={trigger} errors = {logerror} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Dashboard>
+        <Dashboard trigger ={trigger} setTrigger= {setTrigger} errors = {logerror} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Dashboard>
         </Route> 
         <Redirect  to="/dashboard"/>
         </div> : <div>

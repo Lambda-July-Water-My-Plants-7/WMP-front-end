@@ -5,7 +5,7 @@ const EditPlant = (props) => {
     const [plant, setPlant] = useState(null)
     const {push} = useHistory()
     const {id} = useParams()
-    // const {trigger} = props
+    const {trigger,setTrigger} = props
     console.log(plant)
     //useEffect for initial load for plant data--GET
     useEffect(() => {

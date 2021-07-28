@@ -8,10 +8,10 @@ const initialValues = {
     nickname: '',
     userID: '',
 }
-const AddNewPlantForm = () => {
+const AddNewPlantForm = (props) => {
     const [newPlant, setNewPlant] = useState(initialValues);
-    const [trigger,setTriggering] = useState(false)
     const history = useHistory()
+    const {trigger,setTrigger} = props
     const submitHandler = (e) => {
         e.preventDefault();
         axiosWithAuth()
@@ -19,10 +19,12 @@ const AddNewPlantForm = () => {
             .then(res => {
                 // window.location.pathname = `plants/${res.data.plantID}`;
                 console.log(res.data)
+                setTrigger(!trigger)
             })
             .catch(err => {
                 console.log('err: ', err.response)
             })
+
             history.push('./dashboard')
     }
     const changeHandler= (e) => {

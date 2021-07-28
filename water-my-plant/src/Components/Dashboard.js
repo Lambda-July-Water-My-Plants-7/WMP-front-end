@@ -14,7 +14,7 @@ import {
 export default function Dashboard(props) { 
     const [plants,setPlants] = useState(null)
     const [waterd,setWater] = useState(null)
-    const {trigger} = props
+    const {trigger,setTrigger} = props
     const history = useHistory()
     // const myfunction = ()=> {
     //     axios.get('https://wmp-api.herokuapp.com/api/plants').then(res => console.log(res.data))
@@ -23,6 +23,7 @@ export default function Dashboard(props) {
         axiosWithAuth().get('https://wmp-api.herokuapp.com/api/plants').then(res => 
         setPlants(res.data)
         )
+        console.log('Inside UseEffect')
     },[waterd,trigger])
 
     const deletePlant = (e,id) => {
@@ -34,7 +35,7 @@ export default function Dashboard(props) {
                 console.log('Delete success')
                 setPlants([...plants])
                 history.push('/dashboard')
-                // setTrigger(!trigger)
+                setTrigger(!trigger)
             })
             .catch(err => {
                 console.log("DELETE ERR", err)
