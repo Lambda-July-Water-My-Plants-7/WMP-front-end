@@ -5,7 +5,8 @@ import {
   Route,
   Link,
   Redirect,
-  useLocation
+  useLocation,
+  useHistory
 } from "react-router-dom";
 import schema from './validation/formSchema'
 import axios from 'axios';
@@ -15,6 +16,7 @@ import { useState, useEffect } from 'react';
 import {reach} from 'yup';
 import loginschema from './validation/loginformSchema'
 import AddNewPlantForm from './Components/NewplantForm'
+import Dashboard from './Components/Dashboard'
 
 const initialformvalues = {username: '', password: '',phoneNumber: ''}
 const initialErrors = {username: '', password: '',phoneNumber: ''}
@@ -22,7 +24,8 @@ function App() {
   const [formvalues,setFormValues] = useState(initialformvalues)
   const [errors, setErrors] = useState(initialErrors)
   const [logerror, setLogerror] = useState(initialErrors)
-  const [disabled, setDisabled] = useState(true) 
+  const [disabled, setDisabled] = useState(true)
+  let history = useHistory();
   let location = useLocation();
 
   const validate = (name,value) => {
@@ -42,11 +45,16 @@ function App() {
   const login = () => {
     axios.post('https://wmp-api.herokuapp.com/api/auth/login', formvalues).then( res=>{
       console.log(res.data)
+      const token = res.data.token;
+      localStorage.setItem('token', `"${token}"`);
+      history.push('/dashboard')
     }).catch( err => {console.log(err)})
   }
   const register = () => {
     axios.post('https://wmp-api.herokuapp.com/api/auth/register', formvalues).then( res=>{
       console.log(res.data)
+      const token = res.data.token;
+      localStorage.setItem('token', `"${token}"`);
     }).catch( err => {console.log(err)})
   }
 
@@ -54,9 +62,11 @@ function App() {
     e.preventDefault()
     if(location.pathname === '/register') {
       register()
+
   }
     else{
       login()
+
     }
     setFormValues(initialformvalues)
 }
@@ -71,23 +81,50 @@ useEffect(() => {
 }, [formvalues])
 
 
+// useEffect(() => {
+//   // 🔥 STEP 9- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
+// setFormValues(initialformvalues)
+// console.log(formvalues)
+// console.log('use effect tken is working')
+// }, [localStorage.getItem('token')])
+
+const logout = ()=> {
+  history.push('/login')
+  localStorage.removeItem('token')
+}
+
+
   return (
     <div className="App">
       <div className="header">
       <img src="https://www.seekpng.com/png/full/78-788239_cartoon-leaf.png"></img>
-      <Link to="/login">Login</Link>
-      <Link to="/register">Register</Link>
+
+
+      {localStorage.getItem('token') ? <div><Link to="/add">Add Plant</Link> <Link to="/dashboard">Dashboard</Link>    <a onClick={()=> logout()}>Logout</a> </div>: <div><Link to="/login">Login</Link><Link to="/register">Register</Link></div>}
+
       </div>
 
       <Switch>
-        <Route path="/login">
-        {/* <Login errors = {logerror} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Login> */}
+     {localStorage.getItem('token') ? <div>
+     <Route exact path="/add">
         <AddNewPlantForm />
+        </Route>
+       <Route exact path="/dashboard">
+        <Dashboard errors = {logerror} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Dashboard>
+        </Route> 
+        <Redirect  to="/dashboard"/>
+        </div> : <div>
+        <Route path="/login">
+        <Login errors = {logerror} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Login>
         </Route>
         <Route path="/register">
           <Register errors = {errors} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Register>
         </Route>
-        <Redirect to="/login" />
+        <Redirect to="/login"/>
+
+        </div> }
+
+
       </Switch>
 
     </div>

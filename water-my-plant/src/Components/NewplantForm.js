@@ -14,7 +14,8 @@ const AddNewPlantForm = () => {
         axiosWithAuth()
             .post('api/plants/', newPlant)
             .then(res => {
-                window.location.pathname = `plants/${res.data.plantID}`;
+                // window.location.pathname = `plants/${res.data.plantID}`;
+                console.log(res.data)
             })
             .catch(err => {
                 console.log('err: ', err.response)
@@ -64,15 +65,6 @@ const AddNewPlantForm = () => {
                         name="nickname"
                         placeholder="nickname"
                         value={newPlant.nickname}
-                        onChange={changeHandler}
-                    />
-                    <label htmlFor="userID" />UserID
-                    <input
-                        id="userID"
-                        type="number"
-                        name="userID"
-                        placeholder="userID"
-                        value={newPlant.userID}
                         onChange={changeHandler}
                     />
                     <button type='submit'>Save</button>
