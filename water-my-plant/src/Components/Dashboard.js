@@ -33,7 +33,7 @@ export default function Dashboard(props) {
             })}
             
 
-        </table>
+        </table> 
     </div>
     </div>
 )
