@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axiosWithAuth from './axiosWithAuth/axiosWithAuth';
+import { useHistory } from 'react-router-dom';
 const initialValues = {
     speciesID: '',
     h2oInterval: '', 
@@ -9,6 +10,8 @@ const initialValues = {
 }
 const AddNewPlantForm = () => {
     const [newPlant, setNewPlant] = useState(initialValues);
+    const [trigger,setTriggering] = useState(false)
+    const history = useHistory()
     const submitHandler = (e) => {
         e.preventDefault();
         axiosWithAuth()
@@ -20,6 +23,7 @@ const AddNewPlantForm = () => {
             .catch(err => {
                 console.log('err: ', err.response)
             })
+            history.push('./dashboard')
     }
     const changeHandler= (e) => {
         // e.preventDefault()

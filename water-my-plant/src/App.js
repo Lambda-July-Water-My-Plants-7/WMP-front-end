@@ -17,6 +17,7 @@ import {reach} from 'yup';
 import loginschema from './validation/loginformSchema'
 import AddNewPlantForm from './Components/NewplantForm'
 import Dashboard from './Components/Dashboard'
+import EditPlant  from './Components/Editplant';
 
 const initialformvalues = {username: '', password: '',phoneNumber: ''}
 const initialErrors = {username: '', password: '',phoneNumber: ''}
@@ -25,6 +26,7 @@ function App() {
   const [errors, setErrors] = useState(initialErrors)
   const [logerror, setLogerror] = useState(initialErrors)
   const [disabled, setDisabled] = useState(true)
+  const [trigger,setTrigger] = useState(false)
   let history = useHistory();
   let location = useLocation();
 
@@ -105,12 +107,15 @@ const logout = ()=> {
       </div>
 
       <Switch>
+        <Route path='/edit/:id'>
+      <EditPlant trigger = {trigger}/>
+        </Route>
      {localStorage.getItem('token') ? <div>
      <Route exact path="/add">
         <AddNewPlantForm />
         </Route>
        <Route exact path="/dashboard">
-        <Dashboard errors = {logerror} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Dashboard>
+        <Dashboard trigger ={trigger} errors = {logerror} disabled = {disabled} submit = {submit} formvalues = {formvalues} change = {change}></Dashboard>
         </Route> 
         <Redirect  to="/dashboard"/>
         </div> : <div>
