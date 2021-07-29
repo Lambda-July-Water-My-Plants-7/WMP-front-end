@@ -132,6 +132,7 @@ export default function Dashboard(props) {
         axiosWithAuth().put(`https://wmp-api.herokuapp.com/api/plants/${id}`,{lastWatered: new Date().toLocaleString()})
         .then(res =>{
             var myDate = new Date();
+            console.log(res)
             setWater(myDate.toString())})
         .catch(e=> console.log(e))
     }

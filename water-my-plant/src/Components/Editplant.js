@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {useParams, useHistory} from "react-router-dom"
 import axiosWithAuth from './axiosWithAuth/axiosWithAuth';
 import styled from 'styled-components'
-import Garlic from "./images/Garlic mustard.jpg"
+import plantschema from '../validation/addplantSchema'
 
 const Styledlist = styled.div`
 h2 {
@@ -58,6 +58,7 @@ const EditPlant = (props) => {
     const {push} = useHistory()
     const {id} = useParams()
     const { editplanterrors,validate} = props
+    const [Disabled,setDisabled] = useState(true)
     //useEffect for initial load for plant data--GET
     useEffect(() => {
         axiosWithAuth()
@@ -70,6 +71,12 @@ const EditPlant = (props) => {
                 console.log("GET ERR AXIOX", err)
             })
     }, [])
+
+    useEffect(() => {
+
+    plantschema.isValid(plant).then(valid => setDisabled(!valid)) 
+        
+      }, [plant])
     //changeHandler
     const changeHandler = e => {
         e.preventDefault()
@@ -166,7 +173,7 @@ const EditPlant = (props) => {
                         value={plant.nickname}
                         onChange={changeHandler}
                     />
-                    <button type='submit'>Save</button>
+                    <button  disabled={Disabled} type='submit'>Save</button>
                     </Styledform>
                 </Styledlist>
         </div>

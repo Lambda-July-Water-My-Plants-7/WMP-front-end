@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from "react"
 import axiosWithAuth from './axiosWithAuth/axiosWithAuth';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components'
+import plantschema from '../validation/addplantSchema'
 
 const Styledlist = styled.div`
 h2 {
@@ -72,6 +73,7 @@ const AddNewPlantForm = (props) => {
     const [newPlant, setNewPlant] = useState(initialValues);
     const history = useHistory()
     const {trigger,setTrigger, addplanterrors,validate} = props
+    const [Disabled,setDisabled] = useState(true)
     const submitHandler = (e) => {
         e.preventDefault();
         axiosWithAuth()
@@ -92,6 +94,12 @@ const AddNewPlantForm = (props) => {
         setNewPlant({...newPlant, [e.target.name]: e.target.value})
         validate(e.target.name,e.target.value)
     }
+
+    useEffect(() => {
+
+        plantschema.isValid(newPlant).then(valid => setDisabled(!valid)) 
+            
+          }, [newPlant])
     return (
 
         <div className='container'>
@@ -157,7 +165,7 @@ const AddNewPlantForm = (props) => {
                         value={newPlant.nickname}
                         onChange={changeHandler}
                     />
-                    <button type='submit'>Save</button>
+                    <button disabled={Disabled} type='submit'>Save</button>
             </Styledform>
             </Styledlist>
             </div>
