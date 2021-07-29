@@ -23,6 +23,7 @@ p {
 `
 const Styledform = styled.form`
   display: flex;
+  margin-bottom: 7rem;
   flex-direction: column;
   border: solid white;
   border-radius: 20%;
